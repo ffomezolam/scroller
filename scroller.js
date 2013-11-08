@@ -1,14 +1,14 @@
-/** 
+/**
  * Exports class for scrolling elements
  *
  * @module scroller
  * @author Andrew Malozemoff
- */ 
+ */
 (function(name, context, definition) { 
-    if(typeof module !== 'undefined' && module.exports) module.exports = definition(/*require(deps)*/); 
-    else if(typeof define === 'function' && define.amd) define(/*[deps], */definition); 
+    if(typeof module !== 'undefined' && module.exports) module.exports = definition(); 
+    else if(typeof define === 'function' && define.amd) define(definition); 
     else context[name] = definition(); 
-})('Scroller', this, function(/*deps*/) {
+})('Scroller', this, function() {
     /**
      * Class for handling and reporting scroll events for elements
      *
@@ -167,13 +167,13 @@
             }
         },
 
-       /**
-        * Set or report y scroll of element
-        * @method y
-        * @chainable
-        * @param {Number} [px] Y scroll
-        * @return {Number} Y scroll
-        */
+        /**
+         * Set or report y scroll of element
+         * @method y
+         * @chainable
+         * @param {Number} [px] Y scroll
+         * @return {Number} Y scroll
+         */
         y: function(px) {
             if(px) {
                 Scroller.scroll.y(this.el, px);
@@ -185,4 +185,4 @@
     };
 
     return Scroller;
-}
+});
