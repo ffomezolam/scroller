@@ -10,6 +10,60 @@
     else if(typeof define === 'function' && define.amd) define(definition); 
     else context[name] = definition(); 
 })('Scroller', this, function() {
+    // custom event listener to support IE
+    var listeners = [],
+        addListener,
+        removeListener;
+
+    if(Element.prototype.addEventListener) {
+        addListener = function(el, handler) {
+            el.addEventListener("scroll", handler);
+            listeners.push({
+                handler: handler
+            });
+        };
+        removeListener = function(el, handler) {
+            if(handler) {
+                el.removeEventListener("scroll", handler);
+            } else {
+                for(var i = 0, l = listeners.length; i < l; i++) {
+                    var listener = l[i];
+                    el.removeEventListener("scroll", listener.handler);
+                }
+            }
+        };
+    } else {
+        addListener = function(el, handler) {
+            function wrapper(e) {
+                e.target = e.srcElement;
+                e.currentTarget = el;
+                handler.call(el, e);
+            }
+            el.attachEvent("onscroll", wrapper);
+            listeners.push({
+                handler: handler,
+                wrapper: wrapper
+            });
+        };
+        removeListener = function(el, handler) {
+            if(!handler) {
+                while(listeners.length) {
+                    var listener = listeners.pop();
+                    this.detachEvent("onscroll", listener.wrapper);
+                }
+            } else {
+                for(var i = 0, l = listeners.length; i < l; i++) {
+                    var listener = listeners[i];
+                    if(listener.handler == handler) {
+                        this.detachEvent("onscroll", listener.wrapper);
+                        listeners.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };
+    }
+
     /**
      * Class for handling and reporting scroll events for elements
      *
@@ -127,7 +181,7 @@
             this.x = x(el);
             this.y = y(el);
 
-            $(el).on('scroll', function() {
+            addListener(this.el, function() {
                 var oldx = that.x;
                 var oldy = that.y;
                 that.x = x(el);
@@ -147,7 +201,7 @@
          * @chainable
          */
         release: function() {
-            if(this.capturing) $(this.el).off('scroll');
+            if(this.capturing) removeListener(this.el);
             this.capturing = false;
             return this;
         },

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <style>
+            div {
+                width: 500px;
+                height: 600px;
+                background-color: yellow;
+                overflow: auto;
+            }
+
+            div>div {
+                width: 400px;
+                height: 900px;
+                background-color: orange;
+            }
+        </style>
+        <script src="scroller.js"></script>
+    </head>
+    <body>
+        <div id="outer">
+            <p>This is a box</p>
+            <div id="inner">
+                This is an inner box
+            </div>
+        </div>
+        <script>
+            var outer = document.getElementById("outer");
+            var inner = document.getElementById("inner");
+
+            var outerScroller = new Scroller(outer);
+            var innerScroller = new Scroller(inner);
+
+            outerScroller.capture(function() {
+                console.log("scrolling");
+            });
+        </script>
+    </body>
+</html>
