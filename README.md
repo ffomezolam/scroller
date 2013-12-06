@@ -1,9 +1,9 @@
 scroller
 =======
 
-A module for handling and reporting scroll events on DOM elements
+A module for handling and reporting scroll events on DOM elements.
 
-NOTE: right now the capture and release methods require ender or jQuery or any framework with an "on" method. Some day I hope I'll get rid of the dependency.
+This module is self-contained and requires no dependencies, though I haven't tested the event handling on old Internet Explorer yet.
 
 API
 ---
@@ -15,7 +15,7 @@ API
 
 ### Instance
 
-- capture (requires framework)
-- release (requires framework)
+- capture
+- release
 - x
 - y

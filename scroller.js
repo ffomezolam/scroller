@@ -3,7 +3,6 @@
  *
  * @module scroller
  * @author Andrew Malozemoff
- * TODO: get rid of ender/jQuery dependency
  */
 (function(name, context, definition) { 
     if(typeof module !== 'undefined' && module.exports) module.exports = definition(); 
