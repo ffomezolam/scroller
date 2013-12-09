@@ -26,7 +26,7 @@
                 el.removeEventListener("scroll", handler);
             } else {
                 for(var i = 0, l = listeners.length; i < l; i++) {
-                    var listener = l[i];
+                    var listener = listeners[i];
                     el.removeEventListener("scroll", listener.handler);
                 }
             }
