@@ -181,8 +181,8 @@
             this._y = y(el);
 
             addListener(this.el, function() {
-                var oldx = that.x;
-                var oldy = that.y;
+                var oldx = that._x;
+                var oldy = that._y;
                 that._x = x(el);
                 that._y = y(el);
                 that._xdir = that._x > oldx ? 1 : that._x < oldx ? -1 : 0;
