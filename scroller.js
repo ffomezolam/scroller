@@ -72,10 +72,10 @@
      */
     function Scroller(e) {
         this.el = e;
-        this.x = Scroller.scroll.x(e);
-        this.y = Scroller.scroll.y(e);
-        this.xdir = 0;
-        this.ydir = 0;
+        this._x = Scroller.scroll.x(e);
+        this._y = Scroller.scroll.y(e);
+        this._xdir = 0;
+        this._ydir = 0;
         this.capturing = false;
     }
 
@@ -177,17 +177,17 @@
             var el = this.el;
             var x = Scroller.scroll.x;
             var y = Scroller.scroll.y;
-            this.x = x(el);
-            this.y = y(el);
+            this._x = x(el);
+            this._y = y(el);
 
             addListener(this.el, function() {
                 var oldx = that.x;
                 var oldy = that.y;
-                that.x = x(el);
-                that.y = y(el);
-                that.xdir = that.x > oldx ? 1 : that.x < oldx ? -1 : 0;
-                that.ydir = that.y > oldy ? 1 : that.y < oldy ? -1 : 0;
-                callback(el, that.x, that.y, that.xdir, that.ydir);
+                that._x = x(el);
+                that._y = y(el);
+                that._xdir = that._x > oldx ? 1 : that._x < oldx ? -1 : 0;
+                that._ydir = that._y > oldy ? 1 : that._y < oldy ? -1 : 0;
+                callback(el, that._x, that._y, that._xdir, that._ydir);
             });
 
             this.capturing = true;
@@ -244,7 +244,7 @@
          * @return {Number} X direction
          */
         xdir: function() {
-            return this.xdir;
+            return this._xdir;
         },
 
         /**
@@ -254,7 +254,7 @@
          * @return {Number} Y direction
          */
         ydir: function() {
-            return this.ydir;
+            return this._ydir;
         }
     };
 
