@@ -170,7 +170,7 @@
          * @method capture
          * @chainable
          * @param {Function} callback Function to call on scroll event. Passes
-         * element, x scroll, and y scroll as arguments
+         * element, x scroll, x direction, y scroll, and y direction as arguments
          */
         capture: function(callback) {
             var that = this;
@@ -235,6 +235,26 @@
             } else {
                 return Scroller.scroll.y(this.el);
             }
+        },
+
+        /**
+         * Get X direction
+         * @method xdir
+         * @chainable
+         * @return {Number} X direction
+         */
+        xdir: function() {
+            return this.xdir;
+        },
+
+        /**
+         * Get Y direction
+         * @method ydir
+         * @chainable
+         * @return {Number} Y direction
+         */
+        ydir: function() {
+            return this.ydir;
         }
     };
 
