@@ -185,8 +185,8 @@
                 var oldy = that._y;
                 that._x = x(el);
                 that._y = y(el);
-                that._xdir = that._x > oldx ? 1 : that._x < oldx ? -1 : 0;
-                that._ydir = that._y > oldy ? 1 : that._y < oldy ? -1 : 0;
+                that._xdir = that._x - oldx;
+                that._ydir = that._y - oldy;
                 callback(el, that._x, that._y, that._xdir, that._ydir);
             });
 
