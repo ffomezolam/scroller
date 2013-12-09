@@ -213,7 +213,7 @@
          * @return {Number} X scroll
          */
         x: function(px) {
-            if(px) {
+            if(typeof px == "number") {
                 Scroller.scroll.x(this.el, px);
                 return this;
             } else {
@@ -229,7 +229,7 @@
          * @return {Number} Y scroll
          */
         y: function(px) {
-            if(px) {
+            if(typeof px == "number") {
                 Scroller.scroll.y(this.el, px);
                 return this;
             } else {
