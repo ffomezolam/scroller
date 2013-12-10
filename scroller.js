@@ -96,7 +96,6 @@
         this._xdir = 0;
         this._ydir = 0;
         this._scrollTimeout = settings && 'scrollTimeout' in settings && typeof settings.scrollTimeout == 'number' ? settings.scrollTimeout : 100;
-        this._scrolling = false;
         this._capturing = false;
     }
 
