@@ -63,20 +63,41 @@
         };
     }
 
+    // debouncing function for detecting scroll done
+    function debounce(func, ms, context) {
+        var timeout = null;
+
+        return function() {
+            var that = context || this,
+                args = arguments;
+
+            function delayed() {
+                timeout = null;
+                func.apply(that.args);
+            }
+
+            clearTimeout(timeout);
+            timeout = setTimeout(delayed, ms);
+        }
+    }
+
     /**
      * Class for handling and reporting scroll events for elements
      *
      * @class Scroller
      * @constructor
-     * @param {element} e Element to handle
+     * @param {Element} e Element to handle
+     * @param {Object} settings Instance settings
      */
-    function Scroller(e) {
+    function Scroller(e, settings) {
         this.el = e;
         this._x = Scroller.scroll.x(e);
         this._y = Scroller.scroll.y(e);
         this._xdir = 0;
         this._ydir = 0;
-        this.capturing = false;
+        this._scrollTimeout = settings && 'scrollTimeout' in settings && typeof settings.scrollTimeout == 'number' ? settings.scrollTimeout : 100;
+        this._scrolling = false;
+        this._capturing = false;
     }
 
     /**
@@ -180,6 +201,12 @@
             this._x = x(el);
             this._y = y(el);
 
+            var scrollDetect = this._scrollTimeout ? debounce(function() {
+                that._xdir = 0;
+                that._ydir = 0;
+                callback(el, that._x, that._y, that._xdir, that._ydir);
+            }, this._scrollTimeout) : null;
+
             addListener(this.el, function() {
                 var oldx = that._x;
                 var oldy = that._y;
@@ -188,9 +215,10 @@
                 that._xdir = that._x - oldx;
                 that._ydir = that._y - oldy;
                 callback(el, that._x, that._y, that._xdir, that._ydir);
+                if(scrollDetect) scrollDetect();
             });
 
-            this.capturing = true;
+            this._capturing = true;
             return this;
         },
 
@@ -200,8 +228,8 @@
          * @chainable
          */
         release: function() {
-            if(this.capturing) removeListener(this.el);
-            this.capturing = false;
+            if(this._capturing) removeListener(this.el);
+            this._capturing = false;
             return this;
         },
 
