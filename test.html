@@ -30,9 +30,10 @@
             var outerScroller = new Scroller(outer);
             var innerScroller = new Scroller(inner);
 
-            outerScroller.capture(function(e, x, y, xdir, ydir) {
+            function captureFunc(e, x, y, xdir, ydir) {
                 console.log(x, y, xdir, ydir);
-            });
+            }
+            outerScroller.capture(captureFunc);
         </script>
     </body>
 </html>
